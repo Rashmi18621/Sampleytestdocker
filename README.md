@@ -1,9 +1,10 @@
-# Sampleytestdocker
-FROM node:alpine
-WORKDIR /usr/src/app
-COPY package*.json ./
-RUN npm install
-COPY . .
-EXPOSE 3000 22
-HEALTHCHECK CMD curl --fail http://localhost:3000 || exit 1
-CMD ["node","app.js"]
+FROM fedora:29
+
+RUN groupadd -r swuser -g 433 && \
+    useradd -u 431 -r -g swuser -s /sbin/nologin -c "Docker image user" swuser
+
+USER root
+
+RUN dnf install -y vim
+
+USER swuser
